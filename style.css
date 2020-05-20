@@ -53,3 +53,7 @@ body {
 .container {
   padding: 0px;
 }
+
+#gif {
+  overflow: hidden;
+}
