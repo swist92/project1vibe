@@ -1,3 +1,4 @@
+
 //Giphy function:
 function retrieveGif(tag) {
     
@@ -19,6 +20,8 @@ function retrieveGif(tag) {
 };//closing bracket for soothingGif function
 
 
+
+
 // spoonacular function:
 function getRecipe(tag) {
     var queryURL = "https://api.spoonacular.com/recipes/search?query=" + tag + "&number1&apiKey=c30cd056ba1c4e459950da3b71b83d82"
@@ -37,7 +40,7 @@ function getRecipe(tag) {
         recipeLink.text(response.results[0].title);
         
         //empty the #recipe div and append the new link to it
-        $("#recipe").empty()
+        //$("#recipe").empty()
         $("#recipe").append(recipeLink);
         
         var currentRecipe = response.results[0].id
@@ -58,6 +61,8 @@ function getRecipe(tag) {
                 method: "GET"
             }).then(function (response) {
                 console.log(response)
+                var ingredientArray = response
+
             });
             
             //create a variable to represent the ingredient list that corresponds with the returned object?
@@ -71,52 +76,47 @@ function getRecipe(tag) {
         
 };//closing bracket for spoonacular function
 
+//test call for spoonacular function:
+$("#soulButton").on("click", function(){
+    getRecipe("simple")
+});
+
+$("#bodyButton").on("click", function(){
+    youtubeVideo("exercise")
+});
+
+
 
 //youtube function
 function youtubeVideo(tag) {
     
     var queryURL ="https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" + tag + "&key=AIzaSyCgpNgJWhqC8iroTq5_Sbp53ulbGGbafzU"
-    
+
     $.ajax({
-        url: queryURL,
-        method: "GET"
+    url: queryURL,
+    method: "GET"
     }).then(function(response) {
-        
+
+        //create a random number between 1 and 25 and for the video player to select
         for (var i = 0; i < 1; i++) {
             var random = Math.floor(Math.random() * 24) + 1;
-        }
-        
+            }
+
+        //use the random number to select a random video from the response array
         var videoID = response.items[random].id.videoId;
-        
-        console.log(response);
-        
+
+        // create an iframe that loads the randomly selected video
         $("#youtube").html(`<iframe id="ytplayer" type="text/html" width="640" height="360"
         src="https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://example.com"
         frameborder="0"></iframe>`);
-        
+
     });//closing bracket for youtube ajax call
-    
+
 };//closing bracket for youtubevideo function
 
 
-//these are the event listeners for our buttons. each clears out the content area and displays content.
-$("#body").on("click", function(){
-    $("#recipe").empty();
-    $("#gif").empty();
-    $("#youtube").empty();
-    youtubeVideo("exercise")
-}); 
+//this calls a random yoga video from youtube when the page loads
+//youtubeVideo("yoga");
 
-$("#mind").on("click", function(){
-    $("#recipe").empty();
-    $("#gif").empty();
-    $("#youtube").empty();
-    retrieveGif("funny")
-});
-
-$("#soul").on("click", function(){
-    $("#recipe").empty();
-    $("#gif").empty();
-    $("#youtube").empty();
-    getRecipe("healthy")
-});
+//this calls our giphy function when the page loads
+//retrieveGif("puppy")
