@@ -9,6 +9,7 @@ body {
 #nav {
   background-color: #0c7eb4;
   color: white;
+  text-shadow: 2px 2px 4px #e99a28;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-weight: bold;
   font-style: italic;
@@ -28,6 +29,7 @@ body {
   background-color: #6da4aa;
   font-size: 20px;
   color: white;
+  text-shadow: 2px 2px 4px #e1aa70;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-style: italic;
   margin-top: 10px;
