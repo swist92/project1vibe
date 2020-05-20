@@ -1,37 +1,39 @@
 body {
-	background-color: #a3d4d1;
+  background-color: #a3d4d1;
 }
 
 #main-box {
-	margin: 0px;
+  margin: 0px;
 }
 
 #nav {
-	background-color: #0c7eb4;
-	color: white;
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-weight: bold;
-	font-style: italic;
+  background-color: #0c7eb4;
+  color: white;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-style: italic;
 }
 
 #button-box {
-	max-width: 300px;
-	height: 550px;
-	max-width: 90%;
+  max-width: 300px;
+  height: 550px;
+  max-width: 90%;
   margin: 0px;
   text-align: center;
   margin-left: 22px;
-  margin-top: 10PX;
+  margin-top: 10px;
 }
 
 .btn-large {
   background-color: #6da4aa;
   font-size: 20px;
-	color: white;
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-style: italic;
-	margin-top: 10px;
+  color: white;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
+  margin-top: 10px;
   width: 100%;
+  border: 2px solid white;
+  border-radius: 5px;
 }
 
 #content-display {
@@ -40,7 +42,7 @@ body {
   margin-top: 10px;
   height: 1000px;
   max-width: 100%;
-  color: #3A3A39;
+  color: #3a3a39;
   text-align: center;
   font-size: 20px;
   border-radius: 10px;
