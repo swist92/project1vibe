@@ -1,0 +1,15 @@
+#nav {
+  background-color: #0c7eb4;
+  color: white;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.btn {
+  background-color: #6da4aa;
+  color: white;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
+  margin-top: 5px;
+}
