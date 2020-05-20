@@ -74,7 +74,6 @@ function getRecipe(tag) {
 };//closing bracket for spoonacular function
 
 //test call for spoonacular function:
-getRecipe("lasagna");
 
 
 
@@ -83,32 +82,45 @@ getRecipe("lasagna");
 function youtubeVideo(tag) {
     
     var queryURL ="https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" + tag + "&key=AIzaSyCgpNgJWhqC8iroTq5_Sbp53ulbGGbafzU"
-
+    
     $.ajax({
-    url: queryURL,
-    method: "GET"
+        url: queryURL,
+        method: "GET"
     }).then(function(response) {
-
+        
         for (var i = 0; i < 1; i++) {
             var random = Math.floor(Math.random() * 24) + 1;
             console.log(random);
-            }
-
+        }
+        
         var videoID = response.items[random].id.videoId;
-
+        
         console.log(response);
-
+        
         $("#youtube").html(`<iframe id="ytplayer" type="text/html" width="640" height="360"
         src="https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://example.com"
         frameborder="0"></iframe>`);
-
+        
     });//closing bracket for youtube ajax call
-
+    
 };//closing bracket for youtubevideo function
 
 
 //youtube test function
-youtubeVideo("yoga");
+// youtubeVideo("yoga");
+
+$("#body").on("click", function(){
+    youtubeVideo("exercise")
+}); 
 
 //this calls our giphy function when the page loads
-retrieveGif("puppy")
+// retrieveGif("puppy")
+$("#mind").on("click", function(){
+    retrieveGif("funny")
+});
+
+// getRecipe("lasagna");
+
+$("#soul").on("click", function(){
+    getRecipe("healthy")
+});
