@@ -32,15 +32,17 @@ function getRecipe(tag) {
         //see what information you can get from this api, make divs to display them to, append them to the target element one by one
         console.log(response);
         
+        for (var i = 0; i < 1; i++) {
+            var random = Math.floor(Math.random() * 9) + 1;
+        }
         //create a url link to the address in the returned object
-        var recipeLink = $("<a>").attr("href", response.results[0].sourceUrl);
-        recipeLink.text(response.results[0].title);
+        var recipeLink = $("<a>").attr("href", response.results[random].sourceUrl);
+        recipeLink.text(response.results[random].title);
         
         //empty the #recipe div and append the new link to it
-        $("#recipe").empty()
         $("#recipe").append(recipeLink);
         
-        var currentRecipe = response.results[0].id
+        var currentRecipe = response.results[random].id
         console.log(currentRecipe)
         
         
@@ -98,25 +100,38 @@ function youtubeVideo(tag) {
     
 };//closing bracket for youtubevideo function
 
-
 //these are the event listeners for our buttons. each clears out the content area and displays content.
+
+function getRandomValue(arr){
+    return arr[Math.floor(Math.random() * arr.length)];
+  };
+
+var videoCategories = ["exercise", "yoga", "meditation"];
+
 $("#body").on("click", function(){
     $("#recipe").empty();
     $("#gif").empty();
     $("#youtube").empty();
-    youtubeVideo("exercise")
+    random = getRandomValue(videoCategories)
+    youtubeVideo("random")
 }); 
+
+var gifCategories = ["satisfying", "funny", "soothing"];
 
 $("#mind").on("click", function(){
     $("#recipe").empty();
     $("#gif").empty();
     $("#youtube").empty();
-    retrieveGif("funny")
+    random = getRandomValue(gifCategories)
+    retrieveGif(random)
 });
+
+var recipe = ["healthy", "simple", "comfort"];
 
 $("#soul").on("click", function(){
     $("#recipe").empty();
     $("#gif").empty();
     $("#youtube").empty();
-    getRecipe("healthy")
+    random = getRandomValue(recipe)
+    getRecipe(random)
 });
