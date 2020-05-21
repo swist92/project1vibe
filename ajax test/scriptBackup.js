@@ -13,10 +13,10 @@ function retrieveGif(tag) {
         //this builds an image and sets the source to be the url in the response
         $("#gif").html($("<img>").attr("src", response.data.images.original.url));
 
-    });//closing bracket for soothinggif ajax call
+    });//closing bracket for retrieveGif ajax call
 
 
-};//closing bracket for soothingGif function
+};//closing bracket for retrieveGif function
 
 
 // spoonacular function:
@@ -32,21 +32,16 @@ function getRecipe(tag) {
         //see what information you can get from this api, make divs to display them to, append them to the target element one by one
         console.log(response);
         
-        var random = Math.floor(Math.random() * 9) + 1;
-
         //create a url link to the address in the returned object
-        var recipeLink = $("<a>").attr("href", response.results[random].sourceUrl);
-        recipeLink.text(response.results[random].title);
+        var recipeLink = $("<a>").attr("href", response.results[0].sourceUrl);
+        recipeLink.text(response.results[0].title);
         
         //empty the #recipe div and append the new link to it
+        $("#recipe").empty()
         $("#recipe").append(recipeLink);
-        $("#recipe").append("<br>");
         
-        var currentRecipe = response.results[random].id;
-
-        var recipePicture = `https://spoonacular.com/recipeImages/${currentRecipe}-556x370.jpg`;
-
-        $("#recipe").append($("<img>").attr("src", recipePicture));
+        var currentRecipe = response.results[0].id
+        console.log(currentRecipe)
         
         
         //create a function to get the ingredients, with a second ajax call (probably don't have to use localstorage since it will be able to look outward)
@@ -55,32 +50,21 @@ function getRecipe(tag) {
             
             //create a variable for our ingredientQuery url
             var ingredientQuery = `https://api.spoonacular.com/recipes/${currentRecipe}/ingredientWidget.json?apiKey=c30cd056ba1c4e459950da3b71b83d82`;
+            console.log(ingredientQuery);
             
             //second ajax function for ingredients:
             $.ajax({
                 url: ingredientQuery,
                 method: "GET"
             }).then(function (response) {
-                //console.log(response)
-            
-                //STEP: make a for each function that creates a UL(?) for each of the items in the response using their name and picture
-                
-                response.ingredients.forEach(element => {
-                    var li = $("<li>").append(
-                        $("<span>").text(element.name + ":" + "   " + element.amount.us.value + "   " + element.amount.us.unit),
-
-                        $("<img>").attr("src", `https://spoonacular.com/cdn/ingredients_100x100/${element.image}`)
-                    )
-                    $("#recipe").append(li)
-                });
-            
-
+                console.log(response)
             });
             
+            //create a variable to represent the ingredient list that corresponds with the returned object?
             
         };//closing bracket for getIngredients function
 
-        //invoke getIngredients function as a step in the getRecipe function
+        //invoke getIngredients function as a step
         getIngredients();
         
     });//closing bracket for getRecipe function's ajax call
@@ -98,10 +82,9 @@ function youtubeVideo(tag) {
         method: "GET"
     }).then(function(response) {
         
-        //this generates a random number between 1 and 25 - we don't need the for loop since we're only doing it once
+        //this generates a random number between 1 and 25.
         var random = Math.floor(Math.random() * 24) + 1;
         
-        //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
         var videoID = response.items[random].id.videoId;
         
         console.log(response);
@@ -114,38 +97,42 @@ function youtubeVideo(tag) {
     
 };//closing bracket for youtubevideo function
 
-//these are the event listeners for our buttons. each clears out the content area and displays content.
 
+//this global function lets us draw a random value from any array by passing it through
 function getRandomValue(arr){
     return arr[Math.floor(Math.random() * arr.length)];
   };
 
-var videoCategories = ["exercise", "yoga", "meditation"];
 
+//here are arrays of tags that will help randomize content when the buttons are clicked
+var recipeCategories = ["healthy", "simple", "comfort"]
+var videoCategories = ["exercise", "yoga", "meditation"]
+var gifCategories = ["soothing", "satisfying", "funny", "motivational"]
+
+
+//these are the event listeners for our buttons. each clears out the content area and displays randomly selected content from the corresponding function.
 $("#body").on("click", function(){
     $("#recipe").empty();
     $("#gif").empty();
     $("#youtube").empty();
-    random = getRandomValue(videoCategories)
-    youtubeVideo("random")
+    //this uses the getRandomValue function to pick a tag from the videoCategories array
+    random = getRandomValue(videoCategories);
+    //this puts the randomly chosen category into our youtube function above
+    youtubeVideo(random)
 }); 
-
-var gifCategories = ["satisfying", "funny", "soothing"];
 
 $("#mind").on("click", function(){
     $("#recipe").empty();
     $("#gif").empty();
     $("#youtube").empty();
-    random = getRandomValue(gifCategories)
+    random = getRandomValue(gifCategories);
     retrieveGif(random)
 });
-
-var recipe = ["healthy", "simple", "comfort"];
 
 $("#soul").on("click", function(){
     $("#recipe").empty();
     $("#gif").empty();
     $("#youtube").empty();
-    random = getRandomValue(recipe)
+    random = getRandomValue(recipeCategories);
     getRecipe(random)
 });
