@@ -100,26 +100,21 @@ function randomFact() {
 
 //youtube function
 function youtubeVideo(tag) {
-  var queryURL =
-    "https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" +
-    tag +
-    "&key=AIzaSyCgpNgJWhqC8iroTq5_Sbp53ulbGGbafzU";
-
-  $.ajax({
-    url: queryURL,
-    method: "GET",
-  }).then(function (response) {
-    //this generates a random number between 1 and 25 - we don't need the for loop since we're only doing it once
-    var random = Math.floor(Math.random() * 24) + 1;
-
-    //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
-    var videoID = response.items[random].id.videoId;
-
-    console.log(response);
-
-    $(
-      "#youtube"
-    ).html(`<iframe id="ytplayer" type="text/html" width="100%" height="600px"
+    
+    var queryURL ="https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" + tag + "&key=AIzaSyCgpNgJWhqC8iroTq5_Sbp53ulbGGbafzU"
+    
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        
+        //this generates a random number between 1 and 25 - we don't need the for loop since we're only doing it once
+        var random = Math.floor(Math.random() * 24) + 1;
+        
+        //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
+        var videoID = response.items[random].id.videoId;
+        
+        $("#youtube").html(`<iframe id="ytplayer" type="text/html" width="640" height="360"
         src="https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://example.com"
         frameborder="0"></iframe>`);
   }); //closing bracket for youtube ajax call
@@ -171,7 +166,6 @@ var gifCategories = ["satisfying", "funny", "soothing"];
 $("#mind").on("click", function(){
   $("#sidebarImage").empty();
   sidebarGif();
-  $("#backgroundImage").empty();
   $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
