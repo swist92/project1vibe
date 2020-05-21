@@ -167,6 +167,7 @@ $("#mind").on("click", function(){
 var recipe = ["healthy", "simple", "comfort"];
 
 $("#soul").on("click", function () {
+  $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
