@@ -42,7 +42,7 @@ body {
   background-color: white;
   margin: 0px;
   margin-top: 10px;
-  height: 1000px;
+  height: auto;
   max-width: 100%;
   color: #3a3a39;
   text-align: center;
@@ -56,4 +56,9 @@ body {
 
 #gif {
   overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
