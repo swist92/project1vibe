@@ -127,7 +127,7 @@ $("#body").on("click", function(){
     $("#gif").empty();
     $("#youtube").empty();
     random = getRandomValue(videoCategories)
-    youtubeVideo("random")
+    youtubeVideo(random)
 }); 
 
 var gifCategories = ["satisfying", "funny", "soothing"];
