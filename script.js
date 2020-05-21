@@ -88,6 +88,18 @@ function getRecipe(tag) {
 };//closing bracket for spoonacular function
 
 
+//random fact function for mind button
+function randomFact() {
+    var queryURL = `https://uselessfacts.jsph.pl/random.json?language=en`
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        $("#gif").text(response.text)
+    }); //closing bracket for ajax call
+}; //closing bracket for randomfact function
+
 //youtube function
 function youtubeVideo(tag) {
     
@@ -104,8 +116,6 @@ function youtubeVideo(tag) {
         //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
         var videoID = response.items[random].id.videoId;
         
-        console.log(response);
-        
         $("#youtube").html(`<iframe id="ytplayer" type="text/html" width="640" height="360"
         src="https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://example.com"
         frameborder="0"></iframe>`);
@@ -114,11 +124,12 @@ function youtubeVideo(tag) {
     
 };//closing bracket for youtubevideo function
 
-//these are the event listeners for our buttons. each clears out the content area and displays content.
-
+//this is a global function that lets us select randomly from a given array
 function getRandomValue(arr){
     return arr[Math.floor(Math.random() * arr.length)];
-  };
+};
+
+//these are the event listeners for our buttons. each clears out the content area and displays content.
 
 var videoCategories = ["exercise", "yoga", "meditation"];
 
@@ -126,8 +137,16 @@ $("#body").on("click", function(){
     $("#recipe").empty();
     $("#gif").empty();
     $("#youtube").empty();
-    random = getRandomValue(videoCategories)
-    youtubeVideo("random")
+    var options = ["spoonacular", "youtube"];
+    var contentType = getRandomValue(options);
+    
+    if (contentType === "spoonacular") {
+        random = getRandomValue(recipe);
+        getRecipe(random)
+    } else {
+        random = getRandomValue(videoCategories);
+        youtubeVideo(random)
+    };
 }); 
 
 var gifCategories = ["satisfying", "funny", "soothing"];
@@ -136,9 +155,18 @@ $("#mind").on("click", function(){
     $("#recipe").empty();
     $("#gif").empty();
     $("#youtube").empty();
-    random = getRandomValue(gifCategories)
-    retrieveGif(random)
-});
+
+    var options = ["fact", "video"];
+    var contentType = getRandomValue(options);
+
+    if (contentType === "fact") {
+        randomFact()
+    } else {
+        random=getRandomValue(videoCategories);
+        youtubeVideo(random)
+    };
+    
+});//closing bracket for mind button onclick function
 
 var recipe = ["healthy", "simple", "comfort"];
 
