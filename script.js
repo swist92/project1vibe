@@ -130,9 +130,10 @@ function getRandomValue(arr){
 var videoCategories = ["exercise", "yoga", "meditation"];
 
 $("#body").on("click", function(){
-    $("#recipe").empty();
-    $("#gif").empty();
-    $("#youtube").empty();
+  $("#backgroundImage").empty();
+  $("#recipe").empty();
+  $("#gif").empty();
+  $("#youtube").empty();
     var options = ["spoonacular", "youtube"];
     var contentType = getRandomValue(options);
     
@@ -148,9 +149,10 @@ $("#body").on("click", function(){
 var gifCategories = ["satisfying", "funny", "soothing"];
 
 $("#mind").on("click", function(){
-    $("#recipe").empty();
-    $("#gif").empty();
-    $("#youtube").empty();
+  $("#backgroundImage").empty();
+  $("#recipe").empty();
+  $("#gif").empty();
+  $("#youtube").empty();
 
     var options = ["fact", "video"];
     var contentType = getRandomValue(options);
@@ -174,3 +176,4 @@ $("#soul").on("click", function () {
   random = getRandomValue(recipe);
   getRecipe(random);
 });
+
