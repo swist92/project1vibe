@@ -88,17 +88,6 @@ function getRecipe(tag) {
 
 //random fact function for mind button
 function randomFact() {
-<<<<<<< HEAD
-    var queryURL = `https://uselessfacts.jsph.pl/random.json?language=en`
-
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function(response) {
-        $("#gif").text(response.text)
-    }); //closing bracket for ajax call
-}; //closing bracket for randomfact function
-=======
   var queryURL = `https://uselessfacts.jsph.pl/random.json?language=en`;
 
   $.ajax({
@@ -108,7 +97,6 @@ function randomFact() {
     $("#gif").text(response.text);
   }); //closing bracket for ajax call
 } //closing bracket for randomfact function
->>>>>>> 461264a14db6c3897e77826a2613b5a41deba085
 
 //youtube function
 function youtubeVideo(tag) {
@@ -137,9 +125,26 @@ function getRandomValue(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+//function to display gifs in sidebar
+function sidebarGif(){
+queryURL =
+"https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=uplifting";
+
+//ajax call for gifs
+$.ajax({
+url: queryURL,
+method: "GET",
+}).then(function (response) {
+//this builds an image and sets the source to be the url in the response
+$("#sidebarImage").html($("<img>").attr("src", response.data.images.original.url));
+}); //closing bracket for sidebar gif ajax call
+}; //closing bracket for sidebar gif
+
 var videoCategories = ["exercise", "yoga", "meditation"];
 
 $("#body").on("click", function(){
+  $("#sidebarImage").empty();
+  sidebarGif();
   $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
@@ -151,24 +156,20 @@ $("#body").on("click", function(){
         random = getRandomValue(recipe);
         getRecipe(random)
     } else {
-        random = getRandomValue(videoCategories);
-        youtubeVideo(random)
+      random = getRandomValue(videoCategories);
+      youtubeVideo(random)
     };
-}); 
-
+  }); 
+  
 var gifCategories = ["satisfying", "funny", "soothing"];
 
 $("#mind").on("click", function(){
-<<<<<<< HEAD
-    $("#recipe").empty();
-    $("#gif").empty();
-    $("#youtube").empty();
-=======
+  $("#sidebarImage").empty();
+  sidebarGif();
   $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
->>>>>>> 461264a14db6c3897e77826a2613b5a41deba085
 
     var options = ["fact", "video"];
     var contentType = getRandomValue(options);
@@ -185,6 +186,8 @@ $("#mind").on("click", function(){
 var recipe = ["healthy", "simple", "comfort"];
 
 $("#soul").on("click", function () {
+  $("#sidebarImage").empty();
+  sidebarGif();
   $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
@@ -202,9 +205,9 @@ $("#auto").on("click", function () {
   var contentType = ["body", "mind", "soul"];
   var choice = getRandomValue(contentType);
 
-  if (contentType === "body") {
+  if (choice === "body") {
     youtubeVideo("exercise");
-  } else if (contentType === "mind") {
+  } else if (choice === "mind") {
     randomFact();
   } else {
     getRecipe();
