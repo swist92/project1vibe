@@ -115,9 +115,11 @@ function youtubeVideo(tag) {
     //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
     var videoID = response.items[random].id.videoId;
 
+    console.log(response);
+
     $(
       "#youtube"
-    ).html(`<iframe id="ytplayer" type="text/html" width="640" height="360"
+    ).html(`<iframe id="ytplayer" type="text/html" width="100%" height="600px"
         src="https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://example.com"
         frameborder="0"></iframe>`);
   }); //closing bracket for youtube ajax call
@@ -127,8 +129,6 @@ function youtubeVideo(tag) {
 function getRandomValue(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
-
-//these are the event listeners for our buttons. each clears out the content area and displays content.
 
 var videoCategories = ["exercise", "yoga", "meditation"];
 
@@ -169,7 +169,6 @@ $("#mind").on("click", function () {
 var recipe = ["healthy", "simple", "comfort"];
 
 $("#soul").on("click", function () {
-  $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
