@@ -130,9 +130,26 @@ function getRandomValue(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+//function to display gifs in sidebar
+function sidebarGif(){
+queryURL =
+"https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=uplifting";
+
+//ajax call for gifs
+$.ajax({
+url: queryURL,
+method: "GET",
+}).then(function (response) {
+//this builds an image and sets the source to be the url in the response
+$("#sidebarImage").html($("<img>").attr("src", response.data.images.original.url));
+}); //closing bracket for sidebar gif ajax call
+}; //closing bracket for sidebar gif
+
 var videoCategories = ["exercise", "yoga", "meditation"];
 
 $("#body").on("click", function(){
+  $("#sidebarImage").empty();
+  sidebarGif();
   $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
@@ -144,14 +161,17 @@ $("#body").on("click", function(){
         random = getRandomValue(recipe);
         getRecipe(random)
     } else {
-        random = getRandomValue(videoCategories);
-        youtubeVideo(random)
+      random = getRandomValue(videoCategories);
+      youtubeVideo(random)
     };
-}); 
-
+  }); 
+  
 var gifCategories = ["satisfying", "funny", "soothing"];
 
 $("#mind").on("click", function(){
+  $("#sidebarImage").empty();
+  sidebarGif();
+  $("#backgroundImage").empty();
   $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
@@ -172,6 +192,9 @@ $("#mind").on("click", function(){
 var recipe = ["healthy", "simple", "comfort"];
 
 $("#soul").on("click", function () {
+  $("#sidebarImage").empty();
+  sidebarGif();
+  $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
@@ -188,9 +211,9 @@ $("#auto").on("click", function () {
   var contentType = ["body", "mind", "soul"];
   var choice = getRandomValue(contentType);
 
-  if (contentType === "body") {
+  if (choice === "body") {
     youtubeVideo("exercise");
-  } else if (contentType === "mind") {
+  } else if (choice === "mind") {
     randomFact();
   } else {
     getRecipe();
