@@ -132,38 +132,41 @@ function getRandomValue(arr) {
 
 var videoCategories = ["exercise", "yoga", "meditation"];
 
-$("#body").on("click", function () {
+$("#body").on("click", function(){
+  $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
-  var options = ["spoonacular", "youtube"];
-  var contentType = getRandomValue(options);
-
-  if (contentType === "spoonacular") {
-    random = getRandomValue(recipe);
-    getRecipe(random);
-  } else {
-    random = getRandomValue(videoCategories);
-    youtubeVideo(random);
-  }
-});
+    var options = ["spoonacular", "youtube"];
+    var contentType = getRandomValue(options);
+    
+    if (contentType === "spoonacular") {
+        random = getRandomValue(recipe);
+        getRecipe(random)
+    } else {
+        random = getRandomValue(videoCategories);
+        youtubeVideo(random)
+    };
+}); 
 
 var gifCategories = ["satisfying", "funny", "soothing"];
 
-$("#mind").on("click", function () {
+$("#mind").on("click", function(){
+  $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
 
-  var options = ["fact", "video"];
-  var contentType = getRandomValue(options);
+    var options = ["fact", "video"];
+    var contentType = getRandomValue(options);
 
-  if (contentType === "fact") {
-    randomFact();
-  } else {
-    random = getRandomValue(videoCategories);
-    youtubeVideo(random);
-  }
+    if (contentType === "fact") {
+        randomFact()
+    } else {
+        random=getRandomValue(videoCategories);
+        youtubeVideo(random)
+    };
+    
 });
 
 var recipe = ["healthy", "simple", "comfort"];
