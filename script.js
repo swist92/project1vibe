@@ -88,80 +88,82 @@ function getRecipe(tag) {
 
 //random fact function for mind button
 function randomFact() {
-    var queryURL = `https://uselessfacts.jsph.pl/random.json?language=en`
+  var queryURL = `https://uselessfacts.jsph.pl/random.json?language=en`;
 
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function(response) {
-        $("#gif").text(response.text)
-    }); //closing bracket for ajax call
-}; //closing bracket for randomfact function
+  $.ajax({
+    url: queryURL,
+    method: "GET",
+  }).then(function (response) {
+    $("#gif").text(response.text);
+  }); //closing bracket for ajax call
+} //closing bracket for randomfact function
 
 //youtube function
 function youtubeVideo(tag) {
-    
-    var queryURL ="https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" + tag + "&key=AIzaSyCgpNgJWhqC8iroTq5_Sbp53ulbGGbafzU"
-    
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function(response) {
-        
-        //this generates a random number between 1 and 25 - we don't need the for loop since we're only doing it once
-        var random = Math.floor(Math.random() * 24) + 1;
-        
-        //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
-        var videoID = response.items[random].id.videoId;
-        
-        $("#youtube").html(`<iframe id="ytplayer" type="text/html" width="640" height="360"
+  var queryURL =
+    "https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" +
+    tag +
+    "&key=AIzaSyCgpNgJWhqC8iroTq5_Sbp53ulbGGbafzU";
+
+  $.ajax({
+    url: queryURL,
+    method: "GET",
+  }).then(function (response) {
+    //this generates a random number between 1 and 25 - we don't need the for loop since we're only doing it once
+    var random = Math.floor(Math.random() * 24) + 1;
+
+    //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
+    var videoID = response.items[random].id.videoId;
+
+    $(
+      "#youtube"
+    ).html(`<iframe id="ytplayer" type="text/html" width="640" height="360"
         src="https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://example.com"
         frameborder="0"></iframe>`);
   }); //closing bracket for youtube ajax call
 } //closing bracket for youtubevideo function
 
 //this is a global function that lets us select randomly from a given array
-function getRandomValue(arr){
-    return arr[Math.floor(Math.random() * arr.length)];
-};
+function getRandomValue(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
 //these are the event listeners for our buttons. each clears out the content area and displays content.
 
 var videoCategories = ["exercise", "yoga", "meditation"];
 
-$("#body").on("click", function(){
-    $("#recipe").empty();
-    $("#gif").empty();
-    $("#youtube").empty();
-    var options = ["spoonacular", "youtube"];
-    var contentType = getRandomValue(options);
-    
-    if (contentType === "spoonacular") {
-        random = getRandomValue(recipe);
-        getRecipe(random)
-    } else {
-        random = getRandomValue(videoCategories);
-        youtubeVideo(random)
-    };
-}); 
+$("#body").on("click", function () {
+  $("#recipe").empty();
+  $("#gif").empty();
+  $("#youtube").empty();
+  var options = ["spoonacular", "youtube"];
+  var contentType = getRandomValue(options);
+
+  if (contentType === "spoonacular") {
+    random = getRandomValue(recipe);
+    getRecipe(random);
+  } else {
+    random = getRandomValue(videoCategories);
+    youtubeVideo(random);
+  }
+});
 
 var gifCategories = ["satisfying", "funny", "soothing"];
 
-$("#mind").on("click", function(){
-    $("#recipe").empty();
-    $("#gif").empty();
-    $("#youtube").empty();
+$("#mind").on("click", function () {
+  $("#recipe").empty();
+  $("#gif").empty();
+  $("#youtube").empty();
 
-    var options = ["fact", "video"];
-    var contentType = getRandomValue(options);
+  var options = ["fact", "video"];
+  var contentType = getRandomValue(options);
 
-    if (contentType === "fact") {
-        randomFact()
-    } else {
-        random=getRandomValue(videoCategories);
-        youtubeVideo(random)
-    };
-    
+  if (contentType === "fact") {
+    randomFact();
+  } else {
+    random = getRandomValue(videoCategories);
+    youtubeVideo(random);
+  }
 });
 
 var recipe = ["healthy", "simple", "comfort"];
@@ -173,4 +175,22 @@ $("#soul").on("click", function () {
   $("#youtube").empty();
   random = getRandomValue(recipe);
   getRecipe(random);
+});
+
+$("#auto").on("click", function () {
+  $("#backgroundImage").empty();
+  $("#recipe").empty();
+  $("#gif").empty();
+  $("#youtube").empty();
+
+  var contentType = ["body", "mind", "soul"];
+  var choice = getRandomValue(contentType);
+
+  if (contentType === "body") {
+    youtubeVideo("exercise");
+  } else if (contentType === "mind") {
+    randomFact();
+  } else {
+    getRecipe();
+  }
 });
