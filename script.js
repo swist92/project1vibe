@@ -100,21 +100,24 @@ function randomFact() {
 
 //youtube function
 function youtubeVideo(tag) {
-    
-    var queryURL ="https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" + tag + "&key=AIzaSyCgpNgJWhqC8iroTq5_Sbp53ulbGGbafzU"
-    
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function(response) {
-        
-        //this generates a random number between 1 and 25 - we don't need the for loop since we're only doing it once
-        var random = Math.floor(Math.random() * 24) + 1;
-        
-        //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
-        var videoID = response.items[random].id.videoId;
-        
-        $("#youtube").html(`<iframe id="ytplayer" type="text/html" width="640" height="360"
+  var queryURL =
+    "https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" +
+    tag +
+    "&key=AIzaSyCgpNgJWhqC8iroTq5_Sbp53ulbGGbafzU";
+
+  $.ajax({
+    url: queryURL,
+    method: "GET",
+  }).then(function (response) {
+    //this generates a random number between 1 and 25 - we don't need the for loop since we're only doing it once
+    var random = Math.floor(Math.random() * 24) + 1;
+
+    //this creates a variable from the video id of the youtube response, we could probably just put this directly into the queryURL code below.
+    var videoID = response.items[random].id.videoId;
+
+    $(
+      "#youtube"
+    ).html(`<iframe id="ytplayer" type="text/html" width="100%" height="360"
         src="https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://example.com"
         frameborder="0"></iframe>`);
   }); //closing bracket for youtube ajax call
@@ -148,7 +151,7 @@ $("#sidebarImage").html($("<img>").attr("src", response.data.images.original.url
 
 var videoCategories = ["exercise", "yoga", "meditation"];
 
-$("#body").on("click", function(){
+$("#body").on("click", function () {
   $("#sidebarImage").empty();
   sidebarGif();
   $("#backgroundImage").empty();
@@ -169,7 +172,7 @@ $("#body").on("click", function(){
   
 var gifCategories = ["satisfying", "funny", "soothing", "weird", "kitten", "koala"];
 
-$("#mind").on("click", function(){
+$("#mind").on("click", function () {
   $("#sidebarImage").empty();
   sidebarGif();
   $("#backgroundImage").empty();
@@ -177,16 +180,15 @@ $("#mind").on("click", function(){
   $("#gif").empty();
   $("#youtube").empty();
 
-    var options = ["fact", "video"];
-    var contentType = getRandomValue(options);
+  var options = ["fact", "video"];
+  var contentType = getRandomValue(options);
 
-    if (contentType === "fact") {
-        randomFact()
-    } else {
-        random=getRandomValue(videoCategories);
-        youtubeVideo(random)
-    };
-    
+  if (contentType === "fact") {
+    randomFact();
+  } else {
+    random = getRandomValue(videoCategories);
+    youtubeVideo(random);
+  }
 });
 
 var recipe = ["healthy", "simple", "comfort"];
