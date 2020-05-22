@@ -28,13 +28,14 @@ function getRecipe(tag) {
     method: "GET",
   }).then(function (response) {
 
+    // generates a number between 1 and 10
     var random = Math.floor(Math.random() * 9) + 1;
 
-    //create a url link to the address in the returned object
+    // create a url link to the address in the returned object
     var recipeLink = $("<a>").attr("href", response.results[random].sourceUrl);
     recipeLink.text(response.results[random].title);
 
-    //empty the #recipe div and append the new link to it
+    // empty the #recipe div and append the new link to it
     $("#recipe").append(recipeLink);
     $("#recipe").append("<br>");
 
@@ -44,7 +45,7 @@ function getRecipe(tag) {
 
     $("#recipe").append($("<img>").attr("src", recipePicture));
 
-    //create a function to get the ingredients, with a second ajax call (probably don't have to use localstorage since it will be able to look outward)
+    // create a function to get the ingredients, with a second ajax call
     function getIngredients() {
       //create a variable for our ingredientQuery url
       var ingredientQuery = `https://api.spoonacular.com/recipes/${currentRecipe}/ingredientWidget.json?apiKey=c30cd056ba1c4e459950da3b71b83d82`;
@@ -143,6 +144,7 @@ $("#sidebarImage").html($("<img>").attr("src", response.data.images.original.url
 }); //closing bracket for sidebar gif ajax call
 }; //closing bracket for sidebar gif
 
+// these categories add randomization to our content buttons
 var videoCategories = ["exercise", "yoga", "meditation"];
 var bodyVideoCategories = ["excercise", "fitness", "health", "yoga"]
 var mindVideoCategories = ["educational", "learning", "science", "space", "history", "standup"]
@@ -228,6 +230,8 @@ $("#soul").on("click", function () {
 });
 
 $("#auto").on("click", function () {
+  $("#sidebarImage").empty();
+  sidebarGif();
   $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
