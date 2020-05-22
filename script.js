@@ -127,8 +127,14 @@ function getRandomValue(arr) {
 
 //function to display gifs in sidebar
 function sidebarGif(){
-queryURL =
-"https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=uplifting";
+
+ var sideBarGifCategories = ["soothing", "satisfying", "funny"];
+ var sideBarGifChoice = getRandomValue(sideBarGifCategories);
+ 
+ console.log(sideBarGifChoice);
+
+  queryURL =
+`https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=${sideBarGifChoice}`;
 
 //ajax call for gifs
 $.ajax({
@@ -161,7 +167,7 @@ $("#body").on("click", function(){
     };
   }); 
   
-var gifCategories = ["satisfying", "funny", "soothing"];
+var gifCategories = ["satisfying", "funny", "soothing", "weird", "kitten", "koala"];
 
 $("#mind").on("click", function(){
   $("#sidebarImage").empty();
