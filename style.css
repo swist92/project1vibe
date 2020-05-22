@@ -46,10 +46,10 @@ body {
   font-size: 20px;
   border-radius: 10px;
   border-style: solid;
-  border-color: #E1AA70;
+  border-color: #e1aa70;
   border-width: thin;
   font-family: Georgia, "Times New Roman", Times, serif;
-  padding-top: 25px; 
+  padding-top: 25px;
   padding-bottom: 10px;
   margin-top: 17px;
   margin-right: 20px;
@@ -68,7 +68,7 @@ img {
   height: auto;
   border-radius: 10px;
   border-style: solid;
-  border-color: #E99A28;
+  border-color: #e99a28;
   border-width: thin;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -76,4 +76,15 @@ img {
 
 #recipe {
   list-style-type: none;
+}
+
+a {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
+}
+
+li {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
+  text-align: center;
 }
