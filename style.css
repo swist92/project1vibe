@@ -19,7 +19,6 @@ body {
   max-width: 300px;
   height: 550px;
   max-width: 90%;
-  margin: 0px;
   text-align: center;
   margin-left: 22px;
   margin-top: 10px;
@@ -40,8 +39,6 @@ body {
 
 #content-display {
   background-color: white;
-  margin: 0px;
-  margin-top: 10px;
   height: auto;
   max-width: 100%;
   color: #3a3a39;
@@ -49,8 +46,12 @@ body {
   font-size: 20px;
   border-radius: 10px;
   font-family: Georgia, "Times New Roman", Times, serif;
+  padding-top: 25px; 
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 10px;
+  margin: 0px;
+  margin-top: 17px;
 }
 
 .container {
@@ -62,18 +63,16 @@ body {
 }
 
 img {
-  max-width: 100%;
+  max-width: 75%;
   height: auto;
   border-radius: 10px;
-}
-
-.content-border {
-  border-image: round;
+  border-style: solid;
   border-color: #E99A28;
-  border-width: 5px;
+  border-width: thin;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #recipe {
   list-style-type: none;
-
 }
