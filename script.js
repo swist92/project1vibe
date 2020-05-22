@@ -1,4 +1,4 @@
-//Giphy function:
+//Giphy retrieve gif function:
 function retrieveGif(tag) {
   //this query url searches giphy for whatever gifs tagged with whatever "tag" is
   queryURL =
@@ -13,9 +13,9 @@ function retrieveGif(tag) {
     //this builds an image and sets the source to be the url in the response
     $("#gif").html($("<img>").attr("src", response.data.images.original.url));
   }); //closing bracket for retrieveGif ajax call
-} //closing bracket for retrieveGif function
+}; //closing bracket for retrieveGif function
 
-// spoonacular function:
+// spoonacular recipe retrieve function:
 function getRecipe(tag) {
   var queryURL =
     "https://api.spoonacular.com/recipes/search?query=" +
@@ -81,9 +81,9 @@ function getRecipe(tag) {
     //invoke getIngredients function as a step in the getRecipe function
     getIngredients();
   }); //closing bracket for getRecipe function's ajax call
-} //closing bracket for spoonacular function
+}; //closing bracket for spoonacular function
 
-//random fact function for mind button
+//random fact retrieve function:
 function randomFact() {
   var queryURL = `https://uselessfacts.jsph.pl/random.json?language=en`;
 
@@ -93,9 +93,9 @@ function randomFact() {
   }).then(function (response) {
     $("#gif").text(response.text);
   }); //closing bracket for ajax call
-} //closing bracket for randomfact function
+}; //closing bracket for randomfact function
 
-//youtube function
+//youtube video retrieve function:
 function youtubeVideo(tag) {
   var queryURL =
     "https://www.googleapis.com/youtube/v3/search?type=video&maxResults=25&q=" +
@@ -118,21 +118,20 @@ function youtubeVideo(tag) {
         src="https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://example.com"
         frameborder="0"></iframe>`);
   }); //closing bracket for youtube ajax call
-} //closing bracket for youtubevideo function
+}; //closing bracket for youtubevideo function
 
-//this is a global function that lets us select randomly from a given array
+//this is a global function that lets us select randomly from a given array:
 function getRandomValue(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
-}
+}; //closing bracket for getRandomValue function
 
-//function to display gifs in sidebar
+//function to display gifs in sidebar:
 function sidebarGif(){
 
  var sideBarGifCategories = ["soothing", "satisfying", "funny"];
- var sideBarGifChoice = getRandomValue(sideBarGifCategories);
 
   queryURL =
-`https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=${sideBarGifChoice}`;
+`https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=${getRandomValue(sideBarGifCategories)}`;
 
 //ajax call for gifs
 $.ajax({
@@ -145,18 +144,19 @@ $("#sidebarImage").html($("<img>").attr("src", response.data.images.original.url
 }; //closing bracket for sidebar gif
 
 // these categories add randomization to our content buttons
-var videoCategories = ["exercise", "yoga", "meditation"];
-var bodyVideoCategories = ["excercise", "fitness", "health", "yoga"]
-var mindVideoCategories = ["educational", "learning", "science", "space", "history", "standup"]
-var soulVideoCategories = ["nature", "relaxing", "satisfying", "cute"]
+var randomVideoCategories = ["cute", "funny", "beautiful", "relaxing", "sunset"];
+var bodyVideoCategories = ["excercise", "fitness", "health", "yoga"];
+var mindVideoCategories = ["educational", "learning", "science", "space", "history", "standup", "art", "kusama"];
+var soulVideoCategories = ["nature", "relaxing", "satisfying", "cute"];
 
-var bodyRecipes = ["healthy", "fruit", "vegetable"]
-var soulRecipes = ["comfort", "ice cream", "easy", "simple"]
+var bodyRecipes = ["healthy", "fruit", "vegetable"];
+var soulRecipes = ["comfort", "ice cream", "easy", "simple"];
 
-var bodyGifs = ["exercise", "fitness", "sports", "active"]
-var mindGifs = ["science", "weird", "mindblowing", "space", "timelapse"]
-var soulGifs = ["cute", "sunset", "bunny", "kitten", "nature"]
+var bodyGifs = ["exercise", "fitness", "sports", "active"];
+var mindGifs = ["science", "weird", "mindblowing", "space", "timelapse", "fact", "kusama"];
+var soulGifs = ["cute", "sunset", "bunny", "kitten", "nature", "skyline", "motivational"];
 
+// onclick event for body button
 $("#body").on("click", function () {
   $("#sidebarImage").empty();
   sidebarGif();
@@ -177,10 +177,9 @@ $("#body").on("click", function () {
       random = getRandomValue(bodyGifs);
       retrieveGif(random)
     };
-  }); 
-  
-var gifCategories = ["satisfying", "funny", "soothing", "weird", "kitten", "koala"];
+  }); //closing bracket for body button event
 
+//onclick event for mind button
 $("#mind").on("click", function () {
   $("#sidebarImage").empty();
   sidebarGif();
@@ -201,10 +200,9 @@ $("#mind").on("click", function () {
     random = getRandomValue(mindGifs);
     retrieveGif(random)
   }
-});
+}); //closing bracket for mind button event
 
-var recipe = ["healthy", "simple", "comfort"];
-
+//onclick event for soul button
 $("#soul").on("click", function () {
   $("#sidebarImage").empty();
   sidebarGif();
@@ -217,18 +215,16 @@ $("#soul").on("click", function () {
   var contentType = getRandomValue(options);
 
   if (contentType === "recipe") {
-    random = getRandomValue(soulRecipes);
-    getRecipe(random);
+    getRecipe(getRandomValue(soulRecipes));
   } else if (contentType === "video") {
-    random = getRandomValue(soulVideoCategories);
-    youtubeVideo(random)
+    youtubeVideo(getRandomValue(soulVideoCategories))
   } else {
-    random = getRandomValue(soulGifs);
-    retrieveGif(random)
+    retrieveGif(getRandomValue(soulGifs));
   };
 
-});
+}); // closing bracket for soul button event
 
+//onclick event for auto button
 $("#auto").on("click", function () {
   $("#sidebarImage").empty();
   sidebarGif();
@@ -241,13 +237,12 @@ $("#auto").on("click", function () {
   var choice = getRandomValue(contentType);
 
   if (choice === "video") {
-    youtubeVideo("exercise");
+    youtubeVideo(getRandomValue(randomVideoCategories));
   } else if (choice === "fact") {
     randomFact();
   } else if (choice === "recipe") {
-    random = getRandomValue(bodyRecipes)
-    getRecipe(random);
+    getRecipe(getRandomValue(bodyRecipes));
   } else {
     retrieveGif("random")
   };
-});
+}); // closing bracket for auto button event
