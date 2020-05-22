@@ -12,8 +12,8 @@ function retrieveGif(tag) {
   }).then(function (response) {
     //this builds an image and sets the source to be the url in the response
     $("#gif").html($("<img>").attr("src", response.data.images.original.url));
-  }); //closing bracket for soothinggif ajax call
-} //closing bracket for soothingGif function
+  }); //closing bracket for retrieveGif ajax call
+} //closing bracket for retrieveGif function
 
 // spoonacular function:
 function getRecipe(tag) {
@@ -27,16 +27,15 @@ function getRecipe(tag) {
     url: queryURL,
     method: "GET",
   }).then(function (response) {
-    //see what information you can get from this api, make divs to display them to, append them to the target element one by one
-    console.log(response);
 
+    // generates a number between 1 and 10
     var random = Math.floor(Math.random() * 9) + 1;
 
-    //create a url link to the address in the returned object
+    // create a url link to the address in the returned object
     var recipeLink = $("<a>").attr("href", response.results[random].sourceUrl);
     recipeLink.text(response.results[random].title);
 
-    //empty the #recipe div and append the new link to it
+    // empty the #recipe div and append the new link to it
     $("#recipe").append(recipeLink);
     $("#recipe").append("<br>");
 
@@ -46,7 +45,7 @@ function getRecipe(tag) {
 
     $("#recipe").append($("<img>").attr("src", recipePicture));
 
-    //create a function to get the ingredients, with a second ajax call (probably don't have to use localstorage since it will be able to look outward)
+    // create a function to get the ingredients, with a second ajax call
     function getIngredients() {
       //create a variable for our ingredientQuery url
       var ingredientQuery = `https://api.spoonacular.com/recipes/${currentRecipe}/ingredientWidget.json?apiKey=c30cd056ba1c4e459950da3b71b83d82`;
@@ -56,10 +55,8 @@ function getRecipe(tag) {
         url: ingredientQuery,
         method: "GET",
       }).then(function (response) {
-        //console.log(response)
 
-        //STEP: make a for each function that creates a UL(?) for each of the items in the response using their name and picture
-
+        // make an li to append each ingredient and its amount and image
         response.ingredients.forEach((element) => {
           var li = $("<li>").append(
             $("<span>").text(
@@ -129,23 +126,36 @@ function getRandomValue(arr) {
 }
 
 //function to display gifs in sidebar
-function sidebarGif() {
+function sidebarGif(){
+
+ var sideBarGifCategories = ["soothing", "satisfying", "funny"];
+ var sideBarGifChoice = getRandomValue(sideBarGifCategories);
+
   queryURL =
-    "https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=uplifting";
+`https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=${sideBarGifChoice}`;
 
-  //ajax call for gifs
-  $.ajax({
-    url: queryURL,
-    method: "GET",
-  }).then(function (response) {
-    //this builds an image and sets the source to be the url in the response
-    $("#sidebarImage").html(
-      $("<img>").attr("src", response.data.images.original.url)
-    );
-  }); //closing bracket for sidebar gif ajax call
-} //closing bracket for sidebar gif
+//ajax call for gifs
+$.ajax({
+url: queryURL,
+method: "GET",
+}).then(function (response) {
+//this builds an image and sets the source to be the url in the response
+$("#sidebarImage").html($("<img>").attr("src", response.data.images.original.url));
+}); //closing bracket for sidebar gif ajax call
+}; //closing bracket for sidebar gif
 
+// these categories add randomization to our content buttons
 var videoCategories = ["exercise", "yoga", "meditation"];
+var bodyVideoCategories = ["excercise", "fitness", "health", "yoga"]
+var mindVideoCategories = ["educational", "learning", "science", "space", "history", "standup"]
+var soulVideoCategories = ["nature", "relaxing", "satisfying", "cute"]
+
+var bodyRecipes = ["healthy", "fruit", "vegetable"]
+var soulRecipes = ["comfort", "ice cream", "easy", "simple"]
+
+var bodyGifs = ["exercise", "fitness", "sports", "active"]
+var mindGifs = ["science", "weird", "mindblowing", "space", "timelapse"]
+var soulGifs = ["cute", "sunset", "bunny", "kitten", "nature"]
 
 $("#body").on("click", function () {
   $("#sidebarImage").empty();
@@ -154,19 +164,22 @@ $("#body").on("click", function () {
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
-  var options = ["spoonacular", "youtube"];
-  var contentType = getRandomValue(options);
-
-  if (contentType === "spoonacular") {
-    random = getRandomValue(recipe);
-    getRecipe(random);
-  } else {
-    random = getRandomValue(videoCategories);
-    youtubeVideo(random);
-  }
-});
-
-var gifCategories = ["satisfying", "funny", "soothing"];
+    var options = ["spoonacular", "youtube", "gif"];
+    var contentType = getRandomValue(options);
+    
+    if (contentType === "spoonacular") {
+        random = getRandomValue(bodyRecipes);
+        getRecipe(random)
+    } else if (contentType === "youtube") {
+      random = getRandomValue(bodyVideoCategories);
+      youtubeVideo(random)
+    } else {
+      random = getRandomValue(bodyGifs);
+      retrieveGif(random)
+    };
+  }); 
+  
+var gifCategories = ["satisfying", "funny", "soothing", "weird", "kitten", "koala"];
 
 $("#mind").on("click", function () {
   $("#sidebarImage").empty();
@@ -176,14 +189,17 @@ $("#mind").on("click", function () {
   $("#gif").empty();
   $("#youtube").empty();
 
-  var options = ["fact", "video"];
+  var options = ["fact", "video", "gif"];
   var contentType = getRandomValue(options);
 
   if (contentType === "fact") {
     randomFact();
-  } else {
-    random = getRandomValue(videoCategories);
+  } else if (contentType === "video") {
+    random = getRandomValue(mindVideoCategories);
     youtubeVideo(random);
+  } else {
+    random = getRandomValue(mindGifs);
+    retrieveGif(random)
   }
 });
 
@@ -196,24 +212,42 @@ $("#soul").on("click", function () {
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
-  random = getRandomValue(recipe);
-  getRecipe(random);
+
+  var options = ["recipe", "video", "gif"];
+  var contentType = getRandomValue(options);
+
+  if (contentType === "recipe") {
+    random = getRandomValue(soulRecipes);
+    getRecipe(random);
+  } else if (contentType === "video") {
+    random = getRandomValue(soulVideoCategories);
+    youtubeVideo(random)
+  } else {
+    random = getRandomValue(soulGifs);
+    retrieveGif(random)
+  };
+
 });
 
 $("#auto").on("click", function () {
+  $("#sidebarImage").empty();
+  sidebarGif();
   $("#backgroundImage").empty();
   $("#recipe").empty();
   $("#gif").empty();
   $("#youtube").empty();
 
-  var contentType = ["body", "mind", "soul"];
+  var contentType = ["recipe", "video", "fact", "gif"];
   var choice = getRandomValue(contentType);
 
-  if (choice === "body") {
+  if (choice === "video") {
     youtubeVideo("exercise");
-  } else if (choice === "mind") {
+  } else if (choice === "fact") {
     randomFact();
+  } else if (choice === "recipe") {
+    random = getRandomValue(bodyRecipes)
+    getRecipe(random);
   } else {
-    getRecipe();
-  }
+    retrieveGif("random")
+  };
 });
