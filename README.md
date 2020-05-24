@@ -21,3 +21,7 @@ Mobile and Browser views
 ## Contributors
 
 Sarah W., Jeremy F., Russell S., Donald H.
+
+## Thanks to
+
+Photo by Edgar Chaparro on Unsplash
