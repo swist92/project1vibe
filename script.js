@@ -2,7 +2,7 @@
 function retrieveGif(tag) {
   //this query url searches giphy for whatever gifs tagged with whatever "tag" is
   queryURL =
-    "https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&tag=" +
+    "https://api.giphy.com/v1/gifs/random?api_key=YH4MrA2S7hO4bt490OPWcfMSS4SQUtl1&rating=g&tag=" +
     tag;
 
   //ajax call for gifs
